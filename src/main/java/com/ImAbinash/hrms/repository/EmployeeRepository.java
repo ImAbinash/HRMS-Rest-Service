@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -17,13 +18,12 @@ public class EmployeeRepository {
 
 	@PersistenceContext
 	private EntityManager em;
-	
-	
-	public List<Employee> findAllEmployee(){
-		TypedQuery<Employee> findAllEmployeeNamedQuery = em.createNamedQuery("find_all_employee",Employee.class);
+
+	public List<Employee> findAllEmployee() {
+		TypedQuery<Employee> findAllEmployeeNamedQuery = em.createNamedQuery("find_all_employee", Employee.class);
 		return findAllEmployeeNamedQuery.getResultList();
 	}
-	
+
 	public Employee findEmployeeById(int id) {
 		return em.find(Employee.class, id);
 	}
@@ -38,16 +38,30 @@ public class EmployeeRepository {
 		return null;
 	}
 
-//	public Employee updateEmployee(Employee empModel) {
-//		try {
-//			TypedQuery<Employee> empUpdateNamedQuery = em.createNamedQuery("update-employee-details-query", Employee.class);
-//			List<Employee> resultList = empUpdateNamedQuery.getResultList();
-//			return resultList.get(0);
-//		} catch (Exception ex) {
-//			System.out.println(ex);
-//		}
-//		return null;
-//	}
+	public int updateEmployee(int id, Employee empModel) {
+		try {
 
-	
+			Query employeeUpdateNamedQuery = em.createNamedQuery("update_employee");
+			
+			
+			employeeUpdateNamedQuery.setParameter("fname", empModel.getFirstName());
+			employeeUpdateNamedQuery.setParameter("lname",empModel.getLastName());
+			employeeUpdateNamedQuery.setParameter("email", empModel.getEmailAddress());
+			employeeUpdateNamedQuery.setParameter("ph_num",empModel.getPhoneNumber());
+			employeeUpdateNamedQuery.setParameter("alt_Ph", empModel.getAltPhoneNumber());
+			employeeUpdateNamedQuery.setParameter("em_Ph",empModel.getEmergencyPhoneNumber());
+			employeeUpdateNamedQuery.setParameter("u_date",empModel.getUpdatedDate());
+			employeeUpdateNamedQuery.setParameter("id",id);
+			
+			
+			int executeUpdate = employeeUpdateNamedQuery.executeUpdate();
+			
+			return executeUpdate;
+			
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		return 0;
+	}
+
 }

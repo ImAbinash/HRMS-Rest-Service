@@ -12,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "employee")
 @NamedQueries({
-	@NamedQuery(name="find_all_employee",query="SELECT emp FROM Employee emp")
+	@NamedQuery(name="find_all_employee",query="SELECT emp FROM Employee emp"),
+	@NamedQuery(name="update_employee", query="UPDATE Employee e SET e.firstName = :fname , e.lastName = :lname , e.emailAddress = :email , e.phoneNumber  = :ph_num , e.altPhoneNumber = :alt_Ph , e.emergencyPhoneNumber = :em_Ph , e.updatedDate = :u_date WHERE e.id = :id")
 })
 public class Employee {
 
@@ -32,7 +33,7 @@ public class Employee {
 	@Column(name = "phone_number", nullable = false, unique = true)
 	private String phoneNumber;
 
-	@Column(name = "Alt_phone_number", nullable = false)
+	@Column(name = "alt_phone_number", nullable = false)
 	private String altPhoneNumber;
 
 	@Column(name = "emergency_phone_number", nullable = false)

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +35,10 @@ public class EmployeeController {
 		return empService.saveEmployeeDetails(empModel);
 	}
 	
-	
+	@PutMapping("/employee/{id}")
+	public Employee saveAnEmployee(@PathVariable int id, @RequestBody Employee empModel) {
+		return empService.updateEmployeeDetails(id, empModel);
+	}
 	
 	
 }

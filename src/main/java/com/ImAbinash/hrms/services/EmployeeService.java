@@ -40,13 +40,14 @@ public class EmployeeService {
 		System.out.println("Employee: "+ emp);
 		return empRepo.saveAnEmployee(emp);
 	}
-//	public Employee updateEmployeeDetails(Employee emp) {
-//		if(emp.getId() == 0)
-//			emp.setCreatedDate(appUtility.getTodaysDateInUTCFormat());
-//		emp.setUpdatedDate(appUtility.getTodaysDateInUTCFormat());
-//		System.out.println("Employee: "+ emp);
-//		return empRepo.updateEmployee(emp);
-//	}
+	public Employee updateEmployeeDetails(int id, Employee emp) {
+		emp.setUpdatedDate(appUtility.getTodaysDateInUTCFormat());
+		int rowsAffected =  empRepo.updateEmployee(id, emp);
+		if(rowsAffected == 1) {
+			return emp;
+		}
+		return null;
+	}
 	
 	
 	
